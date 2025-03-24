@@ -35,13 +35,6 @@ final class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $errors = $this->validatorInterface->validate($user);
-
-                if (count($errors) > 0) {
-                    $msg = $errors[0]->getMessage();
-                    $type = "warning";
-                    throw new \Exception();
-                }
 
                 $password = $form->get('password')->getData();
                 $hashedPassword = $this->hash->hashPassword($user, $password);

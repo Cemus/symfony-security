@@ -28,7 +28,7 @@ class RegisterType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'attr' => ['class' => 'formulaire'],
-                'label' => 'mail',
+                'label' => 'Email',
                 'required' => true,
             ])
             ->add('password', PasswordType::class, [
