@@ -6,7 +6,8 @@
   --yellow: rgb(207, 169, 0);
 }
 
-/* Layout */
+/* LAYOUT */
+
 body {
   display: grid;
   grid-template-columns: 1fr;
@@ -23,6 +24,8 @@ body {
   font-family: "Sawarabi Gothic", sans-serif;
 }
 
+/* header */
+
 header {
   display: flex;
   align-items: center;
@@ -35,6 +38,11 @@ header > * {
   margin-inline: 1rem;
 }
 
+header > a {
+  font-size: 2rem;
+  padding-block: 1rem;
+}
+
 li {
   list-style: none;
 }
@@ -45,6 +53,12 @@ a:visited {
   text-decoration: none;
 }
 
+a:hover {
+  color: var(--green);
+}
+
+/* main */
+
 main {
   display: flex;
   flex-direction: column;
@@ -52,11 +66,15 @@ main {
   justify-content: center;
 }
 
+/* foooter */
+
 footer {
   box-shadow: 0px -1px 1rem white;
   width: 100%;
   text-align: center;
 }
+
+/* GENERAL */
 
 .success {
   color: var(--green);
@@ -76,6 +94,22 @@ turbo-frame {
   align-items: center;
   justify-content: center;
   gap: 2rem;
+}
+
+button {
+  z-index: 1;
+}
+
+button:hover {
+  cursor: pointer;
+  padding-inline: 2rem;
+  padding-block: 0.75rem;
+}
+
+input {
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.5rem;
 }
 
 #register {
@@ -109,22 +143,6 @@ turbo-frame {
   color: white;
   border-radius: 0.25rem;
   box-shadow: 2px 2px 10px black;
-}
-
-button {
-  z-index: 1;
-}
-
-button:hover {
-  cursor: pointer;
-  padding-inline: 2rem;
-  padding-block: 0.75rem;
-}
-
-input {
-  border-radius: 0.5rem;
-  border: none;
-  padding: 0.5rem;
 }
 
 form > div div:nth-last-of-type() {
