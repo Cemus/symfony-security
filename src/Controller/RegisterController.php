@@ -50,9 +50,12 @@ final class RegisterController extends AbstractController
 
                 $msg = $user->getFirstname() . " a été ajouté avec succès !";
                 $type = "success";
+                $this->addFlash($type, $msg);
 
                 $this->em->persist($user);
                 $this->em->flush();
+
+                var_dump($msg . $type);
 
                 return $this->render('register/index.html.twig', [
                     'form' => $form->createView(),
