@@ -32,6 +32,10 @@ header {
   justify-content: space-between;
   width: 100%;
   box-shadow: 0px -1px 1rem white;
+
+  animation-name: shadow-anim;
+  animation-timing-function: ease-in-out;
+  animation: shadow-anim 1.5s infinite;
 }
 
 header > * {
@@ -72,6 +76,10 @@ footer {
   box-shadow: 0px -1px 1rem white;
   width: 100%;
   text-align: center;
+
+  animation-name: shadow-anim;
+  animation-timing-function: ease-in-out;
+  animation: shadow-anim 1.5s infinite;
 }
 
 /* GENERAL */
@@ -119,6 +127,7 @@ input {
   padding: 4rem;
   box-shadow: 1px 1px 1rem 0.2rem white;
   border-radius: 1rem;
+
   animation-name: shadow-anim;
   animation-timing-function: ease-in-out;
   animation: shadow-anim 1.5s infinite;
@@ -155,7 +164,7 @@ form > div div:nth-last-of-type() {
   }
 
   50% {
-    box-shadow: 3px 3px 1rem 1rem white;
+    box-shadow: 3px 3px 1rem 0.3rem white;
   }
 
   100% {
