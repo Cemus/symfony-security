@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -16,13 +18,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(min: 2, minMessage: "Il faut que le prénom ait 2 caractères minimum !")]
     #[ORM\Column(length: 50)]
     private ?string $firstname = null;
 
-
+    #[Assert\Length(min: 2, minMessage: "Il faut que le nom de famille ait 2 caractères minimum !")]
     #[ORM\Column(length: 50)]
     private ?string $lastname = null;
 
+    #[Assert\NotBlank(message: "Il faut un email pour s'inscrire !")]
+    #[Assert\Email(
+        message: "L'email doit être valide !",
+    )]
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -35,7 +42,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+    #[Assert\Length(min: 8, minMessage: "Il faut que le mot de passe possède un minimum de 8 caractères !")]
+
     #[ORM\Column]
+    #[Assert\Regex(pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", match: true, message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre !")]
     private ?string $password = null;
 
     public function getId(): ?int
@@ -135,5 +145,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    #[Assert\IsTrue(message: '123 ?! Vous plaisantez...')]
+    public function isPasswordOneTwoThree(): bool
+    {
+        return $this->password = "123";
     }
 }

@@ -23,9 +23,8 @@ class UserType extends AbstractType
                 'required' => true,
             ])
             ->add('firstname', TextType::class, [
-                'attr' => ['class' => 'formulaire'],
-                'label' => 'firstname',
-                'required' => true,
+                'empty_data' => "",
+                'required' => false
             ])
             ->add('email', EmailType::class, [
                 'attr' => ['class' => 'formulaire'],

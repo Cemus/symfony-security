@@ -11,13 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class RegisterController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly UserPasswordHasherInterface $hash,
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
+        private readonly ValidatorInterface $validatorInterface
     ) {
     }
 
@@ -31,9 +33,12 @@ final class RegisterController extends AbstractController
         $msg = "";
         $type = "";
 
-        if ($form->isSubmitted()) {
-
-            //Test si le compte n'existe pas
+        if ($form->isSubmitted() && $form->isSubmitted()) {
+            $errors = $this->validatorInterface->validate($user);
+            if ($errors->count() > 0) {
+                echo $errors;
+                return new Response($errors[0]->getMessage());
+            }
             if (!$this->userRepository->findOneBy(["email" => $user->getEmail()])) {
                 $user->setRoles(["ROLE_USER"]);
                 $this->em->persist($user);
