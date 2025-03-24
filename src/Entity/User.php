@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 8, minMessage: "Il faut que le mot de passe possède un minimum de 8 caractères !")]
 
     #[ORM\Column]
-    #[Assert\Regex(pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", match: true, message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre !")]
+    #[Assert\Regex(pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/", match: true, message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre !")]
     private ?string $password = null;
 
     public function getId(): ?int
@@ -145,11 +145,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    #[Assert\IsTrue(message: '123 ?! Vous plaisantez...')]
-    public function isPasswordOneTwoThree(): bool
-    {
-        return $this->password = "123";
     }
 }

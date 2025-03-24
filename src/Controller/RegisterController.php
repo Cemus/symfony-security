@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\RegisterType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,33 +28,50 @@ final class RegisterController extends AbstractController
         Request $request,
     ): Response {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
         $msg = "";
         $type = "";
 
-        if ($form->isSubmitted() && $form->isSubmitted()) {
-            $errors = $this->validatorInterface->validate($user);
-            if ($errors->count() > 0) {
-                echo $errors;
-                return new Response($errors[0]->getMessage());
-            }
-            if (!$this->userRepository->findOneBy(["email" => $user->getEmail()])) {
-                $user->setRoles(["ROLE_USER"]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $errors = $this->validatorInterface->validate($user);
+
+                if (count($errors) > 0) {
+                    $msg = $errors[0]->getMessage();
+                    $type = "warning";
+                    throw new \Exception();
+                }
+
+                $password = $form->get('password')->getData();
+                $hashedPassword = $this->hash->hashPassword($user, $password);
+                $user->setPassword($hashedPassword);
+                $user->setRoles(['ROLE_USER']);
+
+                $msg = $user->getFirstname() . " a été ajouté avec succès !";
+                $type = "success";
+
                 $this->em->persist($user);
                 $this->em->flush();
-                $msg = "Le compte a été ajouté en BDD";
-                $type = "success";
-            } else {
-                $msg = "Les informations email et ou password existe déja";
-                $type = "danger";
+
+                return $this->render('register/index.html.twig', [
+                    'form' => $form->createView(),
+                    'msg' => $msg,
+                    'type' => $type,
+                ]);
+            } catch (\Exception $e) {
+                return $this->render('register/index.html.twig', [
+                    'form' => $form->createView(),
+                    'msg' => $msg,
+                    'type' => $type,
+                ]);
             }
-            $this->addFlash($type, $msg);
         }
 
         return $this->render('register/index.html.twig', [
-            'form' => $form
+            'form' => $form->createView(),
+            'msg' => $msg,
+            'type' => $type,
         ]);
     }
-
 }
