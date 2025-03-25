@@ -5,6 +5,6 @@
 {% block body %}
 <main>
     <h2>{{ user }}</h2>
-    <p>Changement du statut en <span class={{ status==trye ? "success" : "danger" }}> {{ status }} </span></p>
+    <p>Changement du statut en <span class={{ status == "ACTIF" ? "success" : "danger" }}> {{ status }} </span></p>
 </main>
 {% endblock %}
