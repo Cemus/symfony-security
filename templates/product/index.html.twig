@@ -27,8 +27,6 @@
                     <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                    {% else %}
-                        <p class="warning">Il faut être admin pour éditer un produit...</p>
                     {% endif %}
                 </td>
             </tr>

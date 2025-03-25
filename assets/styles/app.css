@@ -177,6 +177,12 @@ table {
   flex-direction: column;
 }
 
+tr {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
 @keyframes shadow-anim {
   0% {
     box-shadow: 1px 1px 1rem 0.2rem white;
