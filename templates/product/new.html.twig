@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Product{% endblock %}
+
+{% block body %}
+<main>
+    <h1>Create new Product</h1>
+
+    {{ include('product/_form.html.twig') }}
+    
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_product_index') }}">back to list</a>    {% else %}
+        <p class="warning">Il faut être admin pour supprimer un produit...</p>
+    {% endif %}
+
+</main>
+{% endblock %}
