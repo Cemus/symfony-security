@@ -163,6 +163,20 @@ ul {
   gap: 2rem;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+tr {
+  display: flex;
+  flex-direction: column;
+  align-items: first baseline;
+}
+
 @keyframes shadow-anim {
   0% {
     box-shadow: 1px 1px 1rem 0.2rem white;
