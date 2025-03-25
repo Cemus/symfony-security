@@ -40,6 +40,7 @@ final class RegisterController extends AbstractController
                 $hashedPassword = $this->hash->hashPassword($user, $password);
                 $user->setPassword($hashedPassword);
                 $user->setRoles(['ROLE_USER']);
+                $user->setStatus(false);
 
                 $msg = $user->getFirstname() . " a été ajouté avec succès !";
                 $type = "success";
