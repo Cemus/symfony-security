@@ -80,5 +80,9 @@ final class RegisterController extends AbstractController
         $user->setStatus(!$user->isStatus());
         $this->em->persist($user);
         $this->em->flush();
+        return $this->render('activate/index.html.twig', [
+            "user" => $user->getFirstname() . $user->getFirstname() . "(" . $user->getId() . ")",
+            "status" => $user->isStatus()
+        ]);
     }
 }
