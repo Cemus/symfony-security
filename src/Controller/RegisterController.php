@@ -70,4 +70,15 @@ final class RegisterController extends AbstractController
             'type' => $type,
         ]);
     }
+
+    #[Route('/activate/{id}', name: 'app_redirect')]
+    public function activate(int $id)
+    {
+        $user = $this->em->getRepository(User::class)->findBy(
+            array('id' => $id)
+        )[0];
+        $user->setStatus(!$user->isStatus());
+        $this->em->persist($user);
+        $this->em->flush();
+    }
 }

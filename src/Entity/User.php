@@ -48,6 +48,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Regex(pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/", match: true, message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre !")]
     private ?string $password = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $status = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,4 +149,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+
 }

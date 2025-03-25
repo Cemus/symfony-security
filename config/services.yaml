@@ -19,10 +19,13 @@ services:
       - "../src/DependencyInjection/"
       - "../src/Entity/"
       - "../src/Kernel.php"
+
+  App\Service\EmailService:
     arguments:
-      mail: "%env(EMAIL_USERNAME)%"
-      pswd: "%env(EMAIL_PASSWORD)%"
-      smtp: "%env(EMAIL_SMTP)%"
-      port: "%env(EMAIL_PORT)%"
+      $mail: "%env(EMAIL_USERNAME)%"
+      $pswd: "%env(EMAIL_PASSWORD)%"
+      $smtp: "%env(EMAIL_SMTP)%"
+      $port: "%env(EMAIL_PORT)%"
+
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
