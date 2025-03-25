@@ -22,10 +22,7 @@ services:
 
   App\Service\EmailService:
     arguments:
-      $mail: "%env(EMAIL_USERNAME)%"
-      $pswd: "%env(EMAIL_PASSWORD)%"
-      $smtp: "%env(EMAIL_SMTP)%"
-      $port: "%env(EMAIL_PORT)%"
+      $dsn: "%env(MAILER_DSN)%"
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

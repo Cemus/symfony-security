@@ -2,60 +2,45 @@
 
 namespace App\Service;
 
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Email;
 
-final class EmailService
+class EmailService
 {
-    private PHPMailer $mailer;
-    public function __construct(
-        private readonly string $mail,
-        private readonly string $pswd,
-        private readonly string $smtp,
-        private readonly string $port,
-        private readonly HttpClientInterface $httpClient
-    ) {
-        $this->mailer = new PHPMailer(true);
-        $this->config();
-    }
+    private string $dsn;
+    private MailerInterface $mailer;
 
-    public function config(): void
+    // Injection de dépendance
+    public function __construct(MailerInterface $mailer, string $dsn)
     {
-        $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER;
-        $this->mailer->isSMTP();
-        $this->mailer->Host = $this->smtp;
-        $this->mailer->SMTPAuth = true;
-        $this->mailer->Username = $this->mail;
-        $this->mailer->Password = $this->pswd;
-        $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $this->mailer->Port = (int) $this->port;
-
+        $this->mailer = $mailer;
+        $this->dsn = $dsn;
     }
-    /**
-     * Méthode pour envoyer des emails, duh
-     * @param string $receiver
-     * Qui reçoit le mail ?
-     * @param string $subject
-     * Sujet du mail
-     * @param string $body
-     * Que désirez-vous envoyer ? (contenu)
-     * @return void
-     */
-    public function sendMail(string $receiver, string $subject, string $body): void
+
+    public function sendEmail(): string
     {
         try {
-            $this->mailer->setFrom($this->mail, 'Expéditeur');
-            $this->mailer->addAddress($receiver, 'Utilisateur');
+            // Crée un transport à partir du DSN
+            $transport = Transport::fromDsn($this->dsn);
 
-            $this->mailer->isHTML(true);
-            $this->mailer->Subject = $subject;
-            $this->mailer->Body = $body;
+            // Crée l'email
+            $email = (new Email())
+                ->from('coucoutest31@laposte.net')
+                ->to('jeyajac188@birige.com')
+                ->subject('Test Email Symfony')
+                ->text('Ceci est un test d\'envoi d\'email avec Symfony.')
+                ->html('<p>Ceci est un <strong>test</strong> d\'envoi d\'email avec Symfony.</p>');
 
-            $this->mailer->send();
-        } catch (Exception $e) {
-            dd("Le message n'a pas été envoyé. Erreur: {$this->mailer->ErrorInfo}");
+            // Crée un objet Mailer avec le transport spécifique
+            $mailer = new \Symfony\Component\Mailer\Mailer($transport);
+
+            // Envoi de l'email de manière synchrone
+            $mailer->send($email);
+
+            return 'Email envoyé avec succès';
+        } catch (\Exception $e) {
+            return 'Erreur: ' . $e->getMessage();
         }
     }
 }
