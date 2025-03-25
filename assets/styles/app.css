@@ -68,6 +68,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 
 /* foooter */
@@ -120,7 +121,7 @@ input {
   padding: 0.5rem;
 }
 
-#register {
+form > div {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -133,18 +134,18 @@ input {
   animation: shadow-anim 1.5s infinite;
 }
 
-#register > div {
+form > div > div {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-#register div:last-of-type {
+form > div div:last-of-type {
   margin-top: 1rem;
 }
 
-#register div:last-of-type > button {
+form > div div:last-of-type > button {
   border: none;
   background-color: var(--green);
   padding-inline: 1.75rem;
@@ -171,10 +172,9 @@ form {
   gap: 1rem;
 }
 
-tr {
+table {
   display: flex;
   flex-direction: column;
-  align-items: first baseline;
 }
 
 @keyframes shadow-anim {

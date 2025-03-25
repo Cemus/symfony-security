@@ -4,6 +4,10 @@
 
 {% block body %}
 <main>
-    <h2>Bienvenue</h2>
+    {% if app.user %}
+        <div>Bienvenue, {{ app.user.firstname }}</div>
+    {% else %}
+        <div>Veuillez vous connecter</div>
+    {% endif %}
 </main>
 {% endblock %}

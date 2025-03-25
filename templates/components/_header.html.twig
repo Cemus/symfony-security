@@ -3,10 +3,15 @@
         <a href="/">C Q RIZ T</a>
         <nav>
             <ul>
-                <li><a href="/register">S'enregistrer</a></li>
-                <li><a href="/product">Les produits</a></li>
-                <li><a href="/login">Se connecter</a></li
-                <li><a href="/logout">Se déconnecter</a></li>
+
+                <li><a href="/product">Produits</a></li>
+                {% if app.user %}
+                    <li><a href="/profile">Profil</a></li>
+                    <li><a href="/logout">Déconnexion ({{ app.user.firstname }})</a></li>
+                {% else %}
+                    <li><a href="/register">Enregistrement</a></li>
+                    <li><a href="/login">Connexion</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
